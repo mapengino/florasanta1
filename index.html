@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flora Santa Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf6f0;
+    --deep-green: #1a2e1a;
+    --forest: #2d4a2d;
+    --sage: #7a9e6e;
+    --blush: #e8c4b8;
+    --rose: #c0786a;
+    --gold: #c9a84c;
+    --light-sage: #d4e6cc;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--deep-green);
+    text-align: center;
+    padding: 48px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.15) 0%, transparent 70%);
+  }
+  .header-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .header-deco::before, .header-deco::after {
+    content: '✦';
+    color: var(--gold);
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  .header-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .header-line.right {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    position: relative;
+    line-height: 1.1;
+  }
+  header h1 span {
+    color: var(--gold);
+  }
+  .header-sub {
+    margin-top: 10px;
+    position: relative;
+  }
+  .header-sub p {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--light-sage);
+    font-weight: 500;
+    line-height: 2;
+  }
+  .header-sub p:first-child {
+    color: var(--gold);
+    opacity: 0.9;
+  }
+  .header-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--gold);
+    margin: 6px auto;
+    opacity: 0.5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    background: var(--forest);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 2px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--light-sage);
+    text-decoration: none;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    font-weight: 500;
+    transition: all 0.25s;
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%; right: 50%;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.25s;
+  }
+  nav a:hover { color: #fff; }
+  nav a:hover::after { left: 0; right: 0; }
+
+  /* ─── HERO BAND ─── */
+  .hero-band {
+    background: var(--blush);
+    text-align: center;
+    padding: 22px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--rose);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── SECTION ─── */
+  .catalog-section {
+    padding: 60px 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 36px;
+  }
+  .section-header::before, .section-header::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--sage));
+  }
+  .section-header::after {
+    background: linear-gradient(to left, transparent, var(--sage));
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    color: var(--deep-green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-icon {
+    font-size: 1.3rem;
+    margin-right: 8px;
+  }
+
+  /* ─── GRID ─── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  /* ─── CARD ─── */
+  .product-card {
+    background: #fff;
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(26,46,26,0.15);
+  }
+  .product-card:hover .card-overlay {
+    opacity: 1;
+  }
+  .card-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--light-sage);
+  }
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .product-card:hover .card-img-wrap img {
+    transform: scale(1.06);
+  }
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,46,26,0.35);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-overlay span {
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.7);
+    padding: 8px 18px;
+    font-weight: 500;
+  }
+  /* placeholder flower icon when no image */
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--light-sage), var(--blush));
+    font-size: 3rem;
+    gap: 8px;
+  }
+  .card-placeholder span {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--forest);
+    opacity: 0.6;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .card-body {
+    padding: 14px 16px 18px;
+    border-top: 1px solid #f0ece6;
+  }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    color: var(--deep-green);
+    font-weight: 600;
+    margin-bottom: 5px;
+    letter-spacing: 0.02em;
+  }
+  .card-price {
+    font-size: 0.78rem;
+    color: var(--rose);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .card-tag {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.6rem;
+    background: var(--light-sage);
+    color: var(--forest);
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--blush), transparent);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    background: var(--deep-green);
+    padding: 60px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.1) 0%, transparent 70%);
+  }
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .contact-subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    color: var(--sage);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .contact-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .btn-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 1px;
+    transition: all 0.25s;
+  }
+  .btn-wa {
+    background: #25d366;
+    color: #fff;
+  }
+  .btn-wa:hover { background: #1db954; transform: translateY(-2px); }
+  .btn-ig {
+    background: transparent;
+    color: #fff;
+    border: 1px solid var(--gold);
+  }
+  .btn-ig:hover { background: var(--gold); color: var(--deep-green); transform: translateY(-2px); }
+  .contact-icon { font-size: 1.2rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #111e11;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── MODAL / DETAIL PAGE ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,20,10,0.75);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--cream);
+    max-width: 760px;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--deep-green);
+    line-height: 1;
+    z-index: 10;
+  }
+  .modal-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    background: var(--light-sage);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+  .modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .modal-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--light-sage), var(--blush));
+    font-size: 5rem;
+  }
+  .modal-body {
+    padding: 32px 36px 36px;
+  }
+  .modal-cat {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .modal-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--deep-green);
+    margin-bottom: 6px;
+  }
+  .modal-price {
+    font-size: 1.4rem;
+    color: var(--rose);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .modal-desc {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 28px;
+    border-top: 1px solid #e8e2da;
+    padding-top: 20px;
+  }
+  .modal-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .modal-info-item {
+    background: #f5f0e8;
+    padding: 12px 16px;
+    border-radius: 1px;
+  }
+  .modal-info-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .modal-info-value {
+    font-size: 0.82rem;
+    color: var(--deep-green);
+    font-weight: 500;
+  }
+  .btn-wa-modal {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25d366;
+    color: #fff;
+    padding: 15px 36px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 1px;
+    transition: all 0.25s;
+    width: 100%;
+    justify-content: center;
+  }
+  .btn-wa-modal:hover { background: #1db954; }
+
+  @media (max-width: 680px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .modal-body { padding: 20px; }
+    .modal-info { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-deco">
+    <div class="header-line"></div>
+    <span style="color:var(--gold);font-size:18px;">✿</span>
+    <div class="header-line right"></div>
+  </div>
+  <h1>Flora <span>Santa</span> Indonesia</h1>
+  <div class="header-sub">
+    <p>Supplier Bunga</p>
+    <div class="header-divider"></div>
+    <p>Spesialis Rangkaian Bunga</p>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#bunga-potong">Bunga Potong</a>
+  <a href="#rangkaian">Rangkaian Bunga</a>
+  <a href="#papan">Papan Bunga</a>
+  <a href="#kontak">Kontak</a>
+</nav>
+
+<!-- HERO BAND -->
+<div class="hero-band">
+  🌸 &nbsp; Kualitas terbaik, langsung dari kebun ke tangan Anda &nbsp; 🌸
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 1: BUNGA POTONG
+═══════════════════════════════════════════════════ -->
+<section class="catalog-section" id="bunga-potong">
+  <div class="section-header">
+    <div class="section-title"><span class="section-icon">✿</span> Bunga Potong</div>
+  </div>
+  <div class="product-grid" id="grid-potong"></div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 2: RANGKAIAN BUNGA
+═══════════════════════════════════════════════════ -->
+<section class="catalog-section" id="rangkaian">
+  <div class="section-header">
+    <div class="section-title"><span class="section-icon">💐</span> Rangkaian Bunga</div>
+  </div>
+  <div class="product-grid" id="grid-rangkaian"></div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 3: PAPAN BUNGA
+═══════════════════════════════════════════════════ -->
+<section class="catalog-section" id="papan">
+  <div class="section-header">
+    <div class="section-title"><span class="section-icon">🌿</span> Papan Bunga</div>
+  </div>
+  <div class="product-grid" id="grid-papan"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════════════ -->
+<section class="contact-section" id="kontak">
+  <div class="contact-title">Hubungi Kami</div>
+  <div class="contact-subtitle">Siap melayani 7 hari seminggu</div>
+  <div class="contact-buttons">
+    <a href="https://wa.me/6281234567890" target="_blank" class="btn-contact btn-wa">
+      <span class="contact-icon">💬</span> WhatsApp Kami
+    </a>
+    <a href="https://instagram.com/florasantaindonesia" target="_blank" class="btn-contact btn-ig">
+      <span class="contact-icon">📷</span> Follow Instagram
+    </a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Flora Santa Indonesia · Supplier Bunga & Spesialis Rangkaian Bunga
+</footer>
+
+<!-- ══════════════════════════════════════════════════
+     MODAL DETAIL
+═══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-img-wrap" class="modal-img-placeholder"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-price" id="modal-price"></div>
+      <div class="modal-info" id="modal-info"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <a href="#" target="_blank" class="btn-wa-modal" id="modal-wa">
+        💬 &nbsp; Pesan via WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA PRODUK ───────────────────────────────────────
+// Ganti 'img' dengan path foto kamu, misal: 'foto/mawar.jpg'
+// Ganti nomor WA di waNumber dengan nomor kamu
+
+const waNumber = '6281234567890'; // ← GANTI NOMOR WA KAMU
+
+const products = {
+  potong: [
+    { id:'bp1', name:'Mawar Merah', price:'Rp 15.000 / tangkai', img:'', emoji:'🌹', desc:'Mawar merah segar pilihan, dipanen langsung dari kebun terbaik. Cocok untuk hadiah, dekorasi, dan berbagai acara istimewa.', stok:'Tersedia', min:'10 tangkai', kategori:'Bunga Potong' },
+    { id:'bp2', name:'Mawar Pink', price:'Rp 15.000 / tangkai', img:'', emoji:'🌸', desc:'Mawar pink lembut dan elegan. Tersedia dalam berbagai shade dari light pink hingga hot pink.', stok:'Tersedia', min:'10 tangkai', kategori:'Bunga Potong' },
+    { id:'bp3', name:'Mawar Putih', price:'Rp 15.000 / tangkai', img:'', emoji:'🤍', desc:'Mawar putih bersih dan anggun. Pilihan sempurna untuk pernikahan dan acara formal.', stok:'Tersedia', min:'10 tangkai', kategori:'Bunga Potong' },
+    { id:'bp4', name:'Lily Putih', price:'Rp 20.000 / tangkai', img:'', emoji:'🌼', desc:'Lily putih harum dengan tangkai panjang. Simbol kemurnian dan keanggunan.', stok:'Tersedia', min:'5 tangkai', kategori:'Bunga Potong' },
+    { id:'bp5', name:'Gerbera', price:'Rp 8.000 / tangkai', img:'', emoji:'🌻', desc:'Gerbera ceria tersedia dalam berbagai warna cerah. Cocok untuk dekorasi dan buket warna-warni.', stok:'Tersedia', min:'20 tangkai', kategori:'Bunga Potong' },
+    { id:'bp6', name:'Krisan Kuning', price:'Rp 7.000 / tangkai', img:'', emoji:'💛', desc:'Krisan kuning cerah tahan lama, pilihan ekonomis untuk dekorasi dan rangkaian bunga.', stok:'Tersedia', min:'20 tangkai', kategori:'Bunga Potong' },
+    { id:'bp7', name:'Anggrek Bulan', price:'Rp 35.000 / tangkai', img:'', emoji:'🌺', desc:'Anggrek bulan premium dengan bunga besar dan eksotis. Tersedia dalam warna putih dan pink.', stok:'Tersedia', min:'3 tangkai', kategori:'Bunga Potong' },
+    { id:'bp8', name:'Tulip', price:'Rp 25.000 / tangkai', img:'', emoji:'🌷', desc:'Tulip impor pilihan. Tersedia dalam warna merah, pink, ungu, dan kuning.', stok:'Terbatas', min:'5 tangkai', kategori:'Bunga Potong' },
+    { id:'bp9', name:'Baby Breath', price:'Rp 25.000 / ikat', img:'', emoji:'🤍', desc:'Baby breath untuk pelengkap rangkaian. Memberikan kesan lembut dan romantis pada setiap buket.', stok:'Tersedia', min:'5 ikat', kategori:'Bunga Potong' },
+  ],
+  rangkaian: [
+    { id:'rb1', name:'Buket Mawar 12', price:'Rp 250.000', img:'', emoji:'💐', desc:'Buket 12 tangkai mawar merah dibalut kertas premium dengan pita elegan. Pilihan romantis untuk hadiah spesial.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb2', name:'Buket Wisuda Pink', price:'Rp 300.000', img:'', emoji:'🎓', desc:'Buket wisuda dengan mawar pink dan aksen baby breath. Dikemas cantik siap foto.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb3', name:'Buket Premium Mix', price:'Rp 450.000', img:'', emoji:'🌸', desc:'Buket campuran mawar, lily, dan gerbera premium. Dipilih tangan untuk tampilan terbaik.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb4', name:'Box Bunga Persegi', price:'Rp 380.000', img:'', emoji:'🎁', desc:'Rangkaian bunga dalam kotak persegi elegan. Desain modern yang kekinian dan instagrammable.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb5', name:'Handbouquet Rustic', price:'Rp 200.000', img:'', emoji:'🌿', desc:'Buket gaya rustic dengan bunga-bunga pilihan dan dedaunan hijau. Kesan natural dan hangat.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb6', name:'Flower Crown', price:'Rp 150.000', img:'', emoji:'👑', desc:'Mahkota bunga segar untuk foto prewedding, ulang tahun, dan acara spesial lainnya.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb7', name:'Standing Flower', price:'Rp 550.000', img:'', emoji:'🌺', desc:'Standing flower mewah untuk ucapan selamat grand opening, anniversary, dan pernikahan.', stok:'Pesan dulu', min:'2 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb8', name:'Buket Anggrek', price:'Rp 500.000', img:'', emoji:'🪷', desc:'Buket premium berbahan anggrek bulan pilihan. Tahan lebih lama dan berkesan mewah.', stok:'Pesan dulu', min:'2 hari sebelum', kategori:'Rangkaian Bunga' },
+    { id:'rb9', name:'Dekorasi Meja', price:'Rp 350.000', img:'', emoji:'🌼', desc:'Rangkaian bunga meja untuk event, pernikahan, dan gala dinner. Bisa disesuaikan tema.', stok:'Pesan dulu', min:'2 hari sebelum', kategori:'Rangkaian Bunga' },
+  ],
+  papan: [
+    { id:'pb1', name:'Papan Ucapan S', price:'Rp 375.000', img:'', emoji:'📋', desc:'Papan bunga ucapan ukuran kecil, cocok untuk ucapan selamat opening, ulang tahun, dan pernikahan.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb2', name:'Papan Ucapan M', price:'Rp 550.000', img:'', emoji:'📋', desc:'Papan bunga ucapan ukuran medium dengan rangkaian bunga lebih lebat dan mewah.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb3', name:'Papan Ucapan L', price:'Rp 675.000', img:'', emoji:'📋', desc:'Papan bunga ukuran 150 x 100 cm, bunga bentuk L lebih lebar dan tebal. Kesan mewah untuk acara besar.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb4', name:'Papan Wedding', price:'Rp 800.000', img:'', emoji:'💒', desc:'Papan bunga khusus pernikahan dengan desain romantis dan elegan. Bisa custom teks nama pengantin.', stok:'Pesan dulu', min:'2 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb5', name:'Papan Duka Cita', price:'Rp 450.000', img:'', emoji:'🕊️', desc:'Papan bunga duka cita dengan warna tenang dan rangkaian bunga putih yang anggun dan penuh hormat.', stok:'Pesan dulu', min:'Hari H', kategori:'Papan Bunga' },
+    { id:'pb6', name:'Papan Grand Opening', price:'Rp 650.000', img:'', emoji:'🎉', desc:'Papan bunga meriah untuk grand opening usaha atau kantor. Warna cerah dan menarik perhatian.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb7', name:'Papan Congratulations', price:'Rp 600.000', img:'', emoji:'🏆', desc:'Papan ucapan selamat untuk promosi jabatan, kelulusan, atau pencapaian istimewa lainnya.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb8', name:'Papan Anniversary', price:'Rp 700.000', img:'', emoji:'🎂', desc:'Papan bunga spesial untuk perayaan anniversary perusahaan maupun pasangan. Desain bisa custom.', stok:'Pesan dulu', min:'1 hari sebelum', kategori:'Papan Bunga' },
+    { id:'pb9', name:'Papan XL Premium', price:'Rp 1.200.000', img:'', emoji:'✨', desc:'Papan bunga ekstra besar dengan rangkaian bunga premium dan mewah. Cocok untuk acara VVIP.', stok:'Pesan dulu', min:'2 hari sebelum', kategori:'Papan Bunga' },
+  ]
+};
+
+// ─── RENDER GRID ───────────────────────────────────────
+function renderGrid(containerId, items) {
+  const grid = document.getElementById(containerId);
+  grid.innerHTML = items.map(item => `
+    <div class="product-card" onclick="openModal('${item.id}')">
+      <div class="card-img-wrap">
+        ${item.img
+          ? `<img src="${item.img}" alt="${item.name}" loading="lazy">`
+          : `<div class="card-placeholder">${item.emoji}<span>Foto Segera</span></div>`
+        }
+        <div class="card-overlay"><span>Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">${item.name}</div>
+        <div class="card-price">${item.price}</div>
+        <span class="card-tag">${item.stok}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderGrid('grid-potong', products.potong);
+renderGrid('grid-rangkaian', products.rangkaian);
+renderGrid('grid-papan', products.papan);
+
+// ─── MODAL ─────────────────────────────────────────────
+const allProducts = [...products.potong, ...products.rangkaian, ...products.papan];
+
+function openModal(id) {
+  const item = allProducts.find(p => p.id === id);
+  if (!item) return;
+
+  document.getElementById('modal-cat').textContent = item.kategori;
+  document.getElementById('modal-name').textContent = item.name;
+  document.getElementById('modal-price').textContent = item.price;
+  document.getElementById('modal-desc').textContent = item.desc;
+
+  const imgWrap = document.getElementById('modal-img-wrap');
+  imgWrap.innerHTML = item.img
+    ? `<img src="${item.img}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;">`
+    : `<div style="font-size:5rem;text-align:center;padding:40px;">${item.emoji}</div>`;
+
+  document.getElementById('modal-info').innerHTML = `
+    <div class="modal-info-item">
+      <div class="modal-info-label">Stok</div>
+      <div class="modal-info-value">${item.stok}</div>
+    </div>
+    <div class="modal-info-item">
+      <div class="modal-info-label">Min. Pemesanan</div>
+      <div class="modal-info-value">${item.min}</div>
+    </div>
+  `;
+
+  const msg = encodeURIComponent(`Halo Flora Santa Indonesia! 🌸\n\nSaya tertarik memesan:\n*${item.name}*\nHarga: ${item.price}\n\nBoleh info lebih lanjut?`);
+  document.getElementById('modal-wa').href = `https://wa.me/${waNumber}?text=${msg}`;
+
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
